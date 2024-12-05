@@ -74,6 +74,7 @@
             
             string[] prints = File.ReadLines("prints.txt").ToArray();
             IEnumerable<string> invalidPrints = prints.Where(print => !CheckPrintsIsValid(print));
+            
             foreach (string x in invalidPrints)
             {
                 ValidateAndCalculatePrint(x);
@@ -81,11 +82,9 @@
                 void ValidateAndCalculatePrint(string print)
                 {
                     List<string> printParts = print.Split(',').ToList();
-                    KeyValuePair<int, int>[] applicableRules = orderRules.Where(pair => printParts.Select(int.Parse).Contains(pair.Value)).ToArray();
-
                     printParts.Sort(delegate(string x, string y)
                     {
-                        if (applicableRules.Any(val => val.Key == int.Parse(x) && val.Value == int.Parse(y)))
+                        if (orderRules.Any(val => val.Key == int.Parse(x) && val.Value == int.Parse(y)))
                         {
                             return 1;
                         }
